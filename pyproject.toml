@@ -11,7 +11,16 @@ python = "^3.9"
 torch = "^2.0.1"
 torchvision = "^0.15.2"
 matplotlib = "^3.7.1"
+colorama = "^0.4.6"
+levenshtein = "^0.21.0"
+sklearn = "^0.0.post5"
+tqdm = "^4.65.0"
 
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.3.0"
+flake8 = "^6.0.0"
+isort = "^5.12.0"
 
 [build-system]
 requires = ["poetry-core"]

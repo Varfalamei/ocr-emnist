@@ -15,10 +15,10 @@
 
 ## Метрика качества
 
-| Model             | Accuracy | Something |
-|-------------------|-------|-----------|
-| CRNNv1 (baseline) | 98 %  | 0.1898    |
-| CRNNv2            | 50.5 % | 0.3       |
+| Model             | Accuracy | Levenshtein distance    |
+|-------------------|------|--------|
+| CRNNv1 (baseline) | 98 % | 0.9423 |
+| CRNNv2            | 94 % | 0.3    |
 
 
 ## Contributors
