@@ -10,6 +10,7 @@ from pathlib import Path
 from src.configs import ExpCONFIG
 from src.dataset import CapchaDataset
 from src.models import CRNN_v2
+from src.utils import valid_epoch, train_epoch
 
 CONFIG = ExpCONFIG(
     seed=42,
