@@ -2,9 +2,8 @@
 name = "ocr-emnist"
 version = "0.1.0"
 description = ""
-authors = ["Shakirov Renat <renatshk@gmail.com>"]
+authors = ["Shakirov Renat <renatshk@gmail.com>", "Nabatchikov Ilya <nabatshikov99@mail.ru>"]
 readme = "README.md"
-packages = [{include = "ocr_emnist"}]
 
 [tool.poetry.dependencies]
 python = "^3.9"

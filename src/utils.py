@@ -1,3 +1,18 @@
+import sys
+from itertools import groupby
+
+import Levenshtein
+import torch
+from colorama import Fore
+from matplotlib import pyplot as plt
+import matplotlib as mpl
+from tqdm import tqdm
+from PIL import Image, ImageDraw, ImageFont
+import random
+
+from src.configs import ExpCONFIG
+
+
 def train_epoch(model, criterion, optimizer, data_loader, config: ExpCONFIG) -> None:
     model.train()
     train_correct = 0
@@ -43,7 +58,7 @@ def train_epoch(model, criterion, optimizer, data_loader, config: ExpCONFIG) -> 
     print("TRAINING. Average Levenshtein distance:", avg_distance)
 
 
-def valid_epoch(model, val_loader, config: ExpCONFIG) -> float:
+def valid_epoch(model, criterion, val_loader, config: ExpCONFIG) -> tuple[float, float]:
     model.eval()
     with torch.no_grad():
         val_correct = 0
@@ -107,3 +122,25 @@ def test_model(model, test_loader, config: ExpCONFIG):
         plt.gcf().text(x=0.1, y=0.2, s="Predicted: " + str(test_preds[j].numpy()))
         plt.savefig(f"{config.logdir}/{config.arch}/plot_{j}.png")
         plt.show()
+
+
+def generate_captcha_image(CONFIG):
+    image = Image.new("RGB", (140, 28), "white")
+    draw = ImageDraw.Draw(image)
+
+    # Загружаем шрифт для отображения текста на изображении
+    font = ImageFont.truetype("path/to/font/RobotoMono-VariableFont_wght.ttf", size=14)
+
+    # Генерируем случайное количество цифр для капчи (от 3 до 5)
+    num_digits = random.randint(CONFIG.len_of_mnist_sequence[0], CONFIG.len_of_mnist_sequence[1])
+
+    # Генерируем случайный текст капчи (только цифры)
+    captcha_text = "".join(random.choices("1234567890", k=num_digits))
+
+    # Размещаем текст посередине изображения
+    text_width, text_height = draw.textsize(captcha_text, font=font)
+    x = (140 - text_width) // 2
+    y = (28 - text_height) // 2
+    draw.text((x, y), captcha_text, font=font, fill="black")
+
+    return image

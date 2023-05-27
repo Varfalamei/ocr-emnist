@@ -17,7 +17,7 @@
 
 | Model             | Accuracy | Levenshtein distance    |
 |-------------------|----------|--------|
-| CRNNv1 (baseline) | 98 %     | 0.9423 |
+| CRNNv1 (baseline) | 98.4 %   | 0.01555 |
 | CRNNv2            | 95.4 %   | 0.04595    |
 
 
