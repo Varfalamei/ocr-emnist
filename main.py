@@ -54,5 +54,5 @@ def recognize_captcha(image, model):
 
 if __name__ == "__main__":
     model = load_model()
-    captcha = generate_captcha_image_from_emnist(CONFIG=CONFIG)
+    captcha = generate_captcha_image_from_emnist()
     recognize_captcha(captcha, model)
