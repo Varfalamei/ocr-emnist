@@ -2,8 +2,8 @@ import torch
 import torchvision
 
 from src.configs import ExpCONFIG
-from src.models import CRNN_v2
-from src.utils import generate_captcha_image
+from src.models import CRNN_v2, CRNN_v1
+from src.utils import generate_captcha_image, generate_captcha_image_from_emnist
 
 CONFIG = ExpCONFIG(
     seed=42,
@@ -16,12 +16,17 @@ CONFIG = ExpCONFIG(
     device=torch.device("cuda" if torch.cuda.is_available() else "cpu"),
     len_of_mnist_sequence=(3, 5),
     digits_per_sequence=5,
+    num_classes=11,
 )
 
 
 def load_model():
-    model = CRNN_v2(CONFIG.num_classes).to(CONFIG.device)
-    checkpoint = torch.load("checkpoints/cnn-gru-ctc-v2-ocr-system/checkpoint_5_epoch_95_acc.pt")
+    model = CRNN_v1(CONFIG.num_classes).to(CONFIG.device)
+    checkpoint = torch.load(
+        # "checkpoints/cnn-gru-ctc-v2-ocr-system/checkpoint_5_epoch_95_acc.pt",
+        "checkpoints/cnn-gru-ctc-v1-ocr-system/checkpoint_2_epoch_98_acc.pt",
+        map_location=CONFIG.device
+    )
     model.load_state_dict(checkpoint)
     return model
 
@@ -42,14 +47,13 @@ def recognize_captcha(image, model):
     # Преобразование предсказанных меток в текст
     captcha_text = ""
     for label in predicted_labels[0]:
-        captcha_text += str(label.item())
+        if label != 10:
+            captcha_text += str(label.item())
 
-    return captcha_text
+    print("Recognized Text:", captcha_text)
 
 
 if __name__ == "__main__":
     model = load_model()
     captcha = generate_captcha_image(CONFIG=CONFIG)
-    recognized_text = recognize_captcha(captcha, model)
-    print("Generated Captcha:", captcha)
-    print("Recognized Text:", recognized_text)
+    recognize_captcha(captcha, model)

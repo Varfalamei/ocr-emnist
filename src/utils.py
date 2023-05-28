@@ -2,7 +2,9 @@ import sys
 from itertools import groupby
 
 import Levenshtein
+import numpy as np
 import torch
+import torchvision
 from colorama import Fore
 from matplotlib import pyplot as plt
 import matplotlib as mpl
@@ -11,6 +13,7 @@ from PIL import Image, ImageDraw, ImageFont
 import random
 
 from src.configs import ExpCONFIG
+from src.dataset import CapchaDataset
 
 
 def train_epoch(model, criterion, optimizer, data_loader, config: ExpCONFIG) -> None:
@@ -124,23 +127,34 @@ def test_model(model, test_loader, config: ExpCONFIG):
         plt.show()
 
 
+def generate_captcha_image_from_emnist(CONFIG):
+    dataset = CapchaDataset((6, 7))
+    set_of_captcha = dataset[0]
+    image = set_of_captcha[0]
+    captcha_text = set_of_captcha[1]
+    captcha_text = ''.join([str(int(digit)) if digit != 10 else '' for digit in captcha_text])
+    plt.imshow(image, cmap='gray')
+    plt.show()
+    print(f"Generated Captcha with text {captcha_text}")
+    return image
+
+
 def generate_captcha_image(CONFIG):
-    image = Image.new("RGB", (140, 28), "white")
+    image = Image.new("RGB", (140, 28), "black")
     draw = ImageDraw.Draw(image)
-
     # Загружаем шрифт для отображения текста на изображении
-    font = ImageFont.truetype("path/to/font/RobotoMono-VariableFont_wght.ttf", size=14)
-
+    font = ImageFont.truetype("./src/fonts/Cookiesandcream.ttf", size=30)
     # Генерируем случайное количество цифр для капчи (от 3 до 5)
     num_digits = random.randint(CONFIG.len_of_mnist_sequence[0], CONFIG.len_of_mnist_sequence[1])
-
     # Генерируем случайный текст капчи (только цифры)
-    captcha_text = "".join(random.choices("1234567890", k=num_digits))
-
+    captcha_text = "  ".join(random.choices("1234567890", k=num_digits))
     # Размещаем текст посередине изображения
     text_width, text_height = draw.textsize(captcha_text, font=font)
     x = (140 - text_width) // 2
     y = (28 - text_height) // 2
-    draw.text((x, y), captcha_text, font=font, fill="black")
-
+    draw.text((x, y), captcha_text, font=font, fill="white")
+    image = image.convert("L")
+    plt.imshow(image, cmap='gray')
+    plt.show()
+    print(f"Generated Captcha: {image} with text {captcha_text.replace(' ', '')}")
     return image

@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Tuple
+from typing import Tuple, Optional
 
 import torch
 
@@ -16,5 +16,5 @@ class ExpCONFIG:
     device: torch.device
     len_of_mnist_sequence: Tuple[int, int]
     digits_per_sequence: int
-    num_classes: int = None
-    blank_label: int = None
+    num_classes: Optional[int]
+    blank_label: Optional[int] = None

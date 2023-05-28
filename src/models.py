@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
-class CRNN(nn.Module):
+class CRNN_v1(nn.Module):
     def __init__(
         self,
         num_classes,
@@ -12,7 +12,7 @@ class CRNN(nn.Module):
         gru_num_layers=2,
         cnn_output_width=32,
     ):
-        super(CRNN, self).__init__()
+        super(CRNN_v1, self).__init__()
         self.conv1 = nn.Conv2d(1, 32, kernel_size=(3, 3))
         self.norm1 = nn.InstanceNorm2d(32)
         self.conv2 = nn.Conv2d(32, 32, kernel_size=(3, 3), stride=2)

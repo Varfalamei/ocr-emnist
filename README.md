@@ -21,6 +21,19 @@
 | CRNNv2            | 95.4 %   | 0.04595    |
 
 
+## Запуск
+```bash
+poetry install
+poetry shell
+python main.py
+```
+
+## Вывод модели
+```bash
+gunicorn main:app -c gunicorn.config.py
+```
+
+
 ## Contributors
 1. Шакиров Ренат
 2. Набатчиков Илья

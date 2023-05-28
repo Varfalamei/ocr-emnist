@@ -63,7 +63,7 @@ class CapchaDataset(Dataset):
         full_img = np.zeros(shape=(self.img_h, self._max_seq_len * self.img_h)).astype(
             np.float32
         )
-        full_img[:, 0 : images.shape[1]] = images
+        full_img[:, 0: images.shape[1]] = images
         return full_img
 
     def __getitem__(self, idx):
@@ -77,7 +77,7 @@ class CapchaDataset(Dataset):
         random_digits_labels = self.emnist_dataset.targets[random_indices]
         labels = torch.zeros((1, self._max_seq_len))
         labels = torch.fill(labels, self.blank_label)
-        labels[0, 0 : len(random_digits_labels)] = random_digits_labels
+        labels[0, 0: len(random_digits_labels)] = random_digits_labels
         x = self.__preprocess(random_images)
         y = labels.numpy().reshape(self._max_seq_len)
         return x, y
