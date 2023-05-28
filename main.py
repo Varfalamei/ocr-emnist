@@ -21,10 +21,9 @@ CONFIG = ExpCONFIG(
 
 
 def load_model():
-    model = CRNN_v1(CONFIG.num_classes).to(CONFIG.device)
+    model = CRNN_v2(CONFIG.num_classes).to(CONFIG.device)
     checkpoint = torch.load(
-        # "checkpoints/cnn-gru-ctc-v2-ocr-system/checkpoint_5_epoch_95_acc.pt",
-        "checkpoints/cnn-gru-ctc-v1-ocr-system/checkpoint_2_epoch_98_acc.pt",
+        "checkpoints/cnn-gru-ctc-v2-ocr-system/checkpoint_5_epoch_95_acc.pt",
         map_location=CONFIG.device
     )
     model.load_state_dict(checkpoint)
@@ -55,5 +54,5 @@ def recognize_captcha(image, model):
 
 if __name__ == "__main__":
     model = load_model()
-    captcha = generate_captcha_image(CONFIG=CONFIG)
+    captcha = generate_captcha_image_from_emnist(CONFIG=CONFIG)
     recognize_captcha(captcha, model)

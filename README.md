@@ -1,14 +1,15 @@
-# OCR system for recognition handwritten characters
+# OCR system for recognition handwritten digits from any captchas
 
 Домашнее задание к [задаче](https://github.com/aitalents/computer-vision-technology/tree/main/Topic%204.%20OCR)
-и сделано оно по [этому](https://github.com/Alek-dr/OCR-Example/tree/master) репозиторию
+и сделано оно по [этому](https://github.com/Alek-dr/OCR-Example/tree/master) репозиторию.
+Также была реализована архитектуры из этой [статьи](https://arxiv.org/abs/1507.05717), эта модель называется CRNN_v2
 
 
 ## Пункты
 
 - [x] архитектура реализована точно как описано в статье, а не просто похожа
 - [x] выбрана и обоснована метрика качества
-- [ ] модель обучена и запускается в демо режиме - т.е. есть скрипт, который загружает обученную модель, на лету генерируется капча, модель её распознает
+- [x] модель обучена и запускается в демо режиме - т.е. есть скрипт, который загружает обученную модель, на лету генерируется капча, модель её распознает
 - [x] есть понимание работы CTC loss
 - [ ] ответы на вопросы
 - [ ] студент сдал и защитил работу в кратчайший срок, на ближайшей официальной практике после лекции
@@ -30,7 +31,16 @@ python main.py
 
 ## Вывод модели
 ```bash
-gunicorn main:app -c gunicorn.config.py
+(ocr-emnist-py3.9)  ~/PycharmProjects/ocr-emnist/ [main] python main.py 
+Generated Captcha: <PIL.Image.Image image mode=L size=140x28 at 0x160103550> with text 44501
+Recognized Text: 44501
+(ocr-emnist-py3.9)  ~/PycharmProjects/ocr-emnist/ [main] python main.py
+Generated Captcha: <PIL.Image.Image image mode=L size=140x28 at 0x1624FE550> with text 41646
+Recognized Text: 41646
+(ocr-emnist-py3.9)  ~/PycharmProjects/ocr-emnist/ [main] python main.py
+Generated Captcha: <PIL.Image.Image image mode=L size=140x28 at 0x15FB97580> with text 84119
+Recognized Text: 86119
+
 ```
 
 
