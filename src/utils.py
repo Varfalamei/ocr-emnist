@@ -1,16 +1,14 @@
+import random
 import sys
 from itertools import groupby
 
 import Levenshtein
-import numpy as np
+import matplotlib as mpl
 import torch
-import torchvision
 from colorama import Fore
 from matplotlib import pyplot as plt
-import matplotlib as mpl
-from tqdm import tqdm
 from PIL import Image, ImageDraw, ImageFont
-import random
+from tqdm import tqdm
 
 from src.configs import ExpCONFIG
 from src.dataset import CapchaDataset
@@ -127,7 +125,7 @@ def test_model(model, test_loader, config: ExpCONFIG):
         plt.show()
 
 
-def generate_captcha_image_from_emnist(CONFIG):
+def generate_captcha_image_from_emnist():
     dataset = CapchaDataset((6, 7))
     set_of_captcha = dataset[0]
     image = set_of_captcha[0]
